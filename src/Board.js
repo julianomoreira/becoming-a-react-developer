@@ -5,24 +5,28 @@ class Board extends Component {
     constructor(){
         super()
         this.state = {
-            notes: [
-                {
-                    id: 0,
-                    note: "Call John"
-                },
-                {
-                    id: 1, 
-                    note: "Email Juju"
-                },
-                {
-                    id: 2, 
-                    note: "Text Laise"
-                }
-            ]            
+            notes: []            
         }
         this.eachNote = this.eachNote.bind(this)
         this.update = this.update.bind(this)
         this.remove = this.remove.bind(this)
+        this.add = this.add.bind(this)
+        this.nextId = this.nextId.bind(this)
+    }
+    add(text){
+        this.setState(prevState => ({
+            notes: [
+                ...prevState.notes,
+                {
+                    id: this.nextId(),
+                    note: text
+                }
+            ]
+        }))
+    }
+    nextId(){
+        this.uniqueId = this.uniqueId || 0
+        return this.uniqueId++
     }
     eachNote(note, i){
         return (
@@ -52,6 +56,7 @@ class Board extends Component {
         return (
             <div>
                 {this.state.notes.map(this.eachNote)}
+                <button id="add" onClick={this.add.bind(null, "new note")}>Add</button>
             </div>
         )
     }
