@@ -7,27 +7,29 @@ class Board extends Component {
         this.state = {
             notes: [
                 {
-                    id: 1,
+                    id: 0,
                     note: "Call John"
                 },
                 {
-                    id: 2, 
+                    id: 1, 
                     note: "Email Juju"
                 },
                 {
-                    id: 3, 
+                    id: 2, 
                     note: "Text Laise"
                 }
             ]            
         }
         this.eachNote = this.eachNote.bind(this)
         this.update = this.update.bind(this)
+        this.remove = this.remove.bind(this)
     }
     eachNote(note, i){
         return (
             <Note key={i} 
                 index={i}
-                onChange={this.update}>
+                onChange={this.update}
+                onRemove={this.remove}>
                 {note.note}
             </Note>    
         )        
@@ -38,6 +40,12 @@ class Board extends Component {
             notes: prevState.notes.map(
                 note => (note.id !== i) ? note : {...note, note: newText}
             )
+        }))
+    }
+    remove(id){
+        console.log('removing...', id);
+        this.setState(prevState => ({
+            notes: prevState.notes.filter(note => note.id !== id)
         }))
     }
     render(){

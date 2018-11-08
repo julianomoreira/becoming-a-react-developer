@@ -21,10 +21,11 @@ class Note extends Component {
         })
     }
     remove(){
-        alert('removed!')
+        this.props.onRemove(this.props.index)
     }
     save(e){
-        e.preventDefault()
+        e.preventDefault()      
+        console.log(this.props);  
         this.props.onChange(this._nextText.value, this.props.index)
         this.setState({
             editing: false
